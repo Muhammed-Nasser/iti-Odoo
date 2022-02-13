@@ -1,0 +1,84 @@
+<odoo>
+    <data>
+        <record id="hms_patient_report_doctors" model="ir.actions.report">
+            <field name="name">Patient Info</field>
+            <field name="model">hms.patient</field>
+            <field name="binding_model_id" ref="model_hms_patient"/>
+            <field name="binding_type">report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hms.hms_patient_pdf_doctors</field>
+            <field name="report_file">hms.hms_patient_pdf_reports</field>
+        </record>
+
+        <template id="hms_patient_pdf_doctors">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h1 class="text-danger">Patient Status Report</h1>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="float-end" t-field="o.image" t-options='{"widget": "image" ,"style":"width: 150px;height: 150px"}'/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br></br>
+                            <div class="container">
+                                  <h3 class="text-primary">Info</h3>
+                                <br></br>
+                                  <div class="row">
+                                    <div class="col-6">
+                                        <div><strong>Name: </strong> <span t-field="o.f_name"/> <span t-field="o.l_name"/></div>
+                                        <div><strong>Age: </strong> <span t-field="o.age"/></div>
+                                        <div><strong>Department: </strong> <span t-field="o.department_id"/></div>
+                                        <div><strong>Doctors: </strong> <span t-field="o.doctors_ids"/></div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div><strong>Birth date: </strong> <span t-field="o.birth_date"/></div>
+                                        <div><strong>CRR: </strong> <span t-field="o.cr_ratio"/></div>
+                                        <div><strong>Blood Type: </strong> <span t-field="o.blood_type"/></div>
+                                        <div><strong>Email: </strong> <span t-field="o.email"/></div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <br></br>
+                             <div class="container">
+                                 <h3 class="text-primary">Log Status</h3>
+                                 <br></br>
+
+                                     <table class="table">
+                                         <tr>
+                                            <th>Log Description</th>
+                                            <th>Date</th>
+                                            <th>Created By</th>
+                                         </tr>
+                                        <t t-foreach="o.records_ids" t-as="log">
+                                         <tr>
+                                            <td>
+                                            <span t-field="log.description"/>
+                                            </td>
+                                            <td>
+                                            <span t-field="log.date"/>
+                                            </td>
+                                            <td>
+                                            <span t-field="log.created_by"/>
+                                            </td>
+                                         </tr>
+                                        </t>
+                                     </table>
+
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
+
+
+
